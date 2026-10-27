@@ -4,8 +4,8 @@
 export interface Item {
     id: string;
     name: string;
-    description: string;
-    price?: number;
-    createdAt: Date;
-    updatedAt: Date;
+    sku: string;
+    quantity: number;
+    price: number;
+    catagory: string;
 }
