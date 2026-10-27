@@ -2,6 +2,7 @@ import Joi, { ObjectSchema } from "joi";
 
 // Item operation schemas organized by request part
 export const productSchema = {
+
     // POST /items - Create new item
     create: {
         body: Joi.object({
@@ -22,16 +23,48 @@ export const productSchema = {
             
         }),
     },
-
-    // GET /items/:id - Get single item
-    getById: {
+     
+    update: {
         params: Joi.object({
             id: Joi.string().required().messages({
                 "any.required": "Item ID is required",
                 "string.empty": "Item ID cannot be empty",
             }),
         }),
+        body: Joi.object({
+            name: Joi.string().optional().messages({
+                "string.empty": "Name cannot be empty",
+            }),
+            quantity: Joi.number.optional().min(0).messages({
+                "number.min": "quantity mest be greater than 0",
+            }),
+            price: Joi.number().optional().min(0).messages({
+                "number.min": "Price must greater than 0",
+            }),
+        }),
     },
 
-    // DELETE etc ...
-};
+    delete: {
+        params: Joi.object({
+            id: Joi.string().required().messages({
+                "any.required": "Post ID is required",
+                "string.empty": "Post ID cannot be empty",
+            }),
+        }),
+    },
+
+     getById: {
+        params: Joi.object({
+            id: Joi.string().required().messages({
+                "any.required": "Post ID is required",
+                "string.empty": "Post ID cannot be empty",
+            }),
+        }),
+        query: Joi.object({
+            include: Joi.string().valid("comments", "author").optional(),
+        }),
+    },
+
+}
+
+
